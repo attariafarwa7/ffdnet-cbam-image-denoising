@@ -14,6 +14,7 @@
   , "path": {
     "root": "denoising"            // "denoising" | "superresolution"
     , "pretrained_netG": null      // path of pretrained model
+    , "models": "/content/drive/MyDrive/CVResearch/checkpoints"
   }
 
   , "datasets": {
@@ -68,8 +69,10 @@
     , "G_regularizer_orthstep": null    // unused
     , "G_regularizer_clipstep": null    // unused
 
-    , "checkpoint_test": 5000           // for testing
-    , "checkpoint_save": 5000           // for saving model
-    , "checkpoint_print": 200           // for print
+    , "max_iter": 35000,
+      "checkpoint_test": 5000,
+      "checkpoint_save": 5000,
+      "checkpoint_print": 200
+
   }
 }

@@ -2,6 +2,7 @@ import numpy as np
 import torch.nn as nn
 import models.basicblock as B
 import torch
+from models.modules.cbam import CBAM
 
 """
 # --------------------------------------------
@@ -44,10 +45,18 @@ class FFDNet(nn.Module):
         self.m_down = B.PixelUnShuffle(upscale_factor=sf)
 
         m_head = B.conv(in_nc*sf*sf+1, nc, mode='C'+act_mode[-1], bias=bias)
-        m_body = [B.conv(nc, nc, mode='C'+act_mode, bias=bias) for _ in range(nb-2)]
+
+        m_body = []
+
+        for _ in range(nb-2):
+            m_body.append(B.conv(nc, nc, mode='C'+act_mode, bias=bias))
+            m_body.append(CBAM(nc))
+
         m_tail = B.conv(nc, out_nc*sf*sf, mode='C', bias=bias)
 
         self.model = B.sequential(m_head, *m_body, m_tail)
+        
+        self.cbam = CBAM(nc)
 
         self.m_up = nn.PixelShuffle(upscale_factor=sf)
 
@@ -63,6 +72,7 @@ class FFDNet(nn.Module):
         m = sigma.repeat(1, 1, x.size()[-2], x.size()[-1])
         x = torch.cat((x, m), 1)
         x = self.model(x)
+        x = self.cbam(x)
         x = self.m_up(x)
         
         x = x[..., :h, :w]

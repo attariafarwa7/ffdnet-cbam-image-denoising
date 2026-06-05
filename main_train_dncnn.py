@@ -157,12 +157,9 @@ def main(json_path='options/train_dncnn.json'):
             current_step += 1
             
             
-            if current_step == max_iter:
+            if current_step >= max_iter:
+                logger.info(f"Training completed at {max_iter} iterations.")
                 model.save(current_step)
-                print(f"Saved final checkpoint at {current_step}")
-
-            if current_step > max_iter:
-                print(f"\nTraining completed at {max_iter} iterations.")
                 return
                 
 

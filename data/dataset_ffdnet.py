@@ -3,7 +3,7 @@ import numpy as np
 import torch
 import torch.utils.data as data
 import utils.utils_image as util
-
+from utils.noise_generator import add_mixed_noise
 
 class DatasetFFDNet(data.Dataset):
     """
@@ -74,8 +74,13 @@ class DatasetFFDNet(data.Dataset):
             # ---------------------------------
             # add noise
             # ---------------------------------
-            noise = torch.randn(img_L.size()).mul_(noise_level).float()
-            img_L.add_(noise)
+            if random.random() < 0.5:
+                # original gaussian (keep stability)
+                noise = torch.randn(img_L.size()).mul_(noise_level).float()
+                img_L.add_(noise)
+            else:
+                # mixed real-world noise (your contribution)
+                img_L = add_mixed_noise(img_L)
 
         else:
             """
