@@ -56,7 +56,6 @@ class FFDNet(nn.Module):
 
         self.model = B.sequential(m_head, *m_body, m_tail)
         
-        self.cbam = CBAM(nc)
 
         self.m_up = nn.PixelShuffle(upscale_factor=sf)
 
@@ -72,7 +71,6 @@ class FFDNet(nn.Module):
         m = sigma.repeat(1, 1, x.size()[-2], x.size()[-1])
         x = torch.cat((x, m), 1)
         x = self.model(x)
-        x = self.cbam(x)
         x = self.m_up(x)
         
         x = x[..., :h, :w]
