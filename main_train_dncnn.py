@@ -64,6 +64,7 @@ def main(json_path='options/train_dncnn.json'):
     init_iter, init_path_G = option.find_last_checkpoint(opt['path']['models'], net_type='G')
     opt['path']['pretrained_netG'] = init_path_G
     current_step = init_iter
+    max_iter = 35000
 
     border = 0
     # --<--<--<--<--<--<--<--<--<--<--<--<--<-
@@ -154,6 +155,16 @@ def main(json_path='options/train_dncnn.json'):
         for i, train_data in enumerate(train_loader):
 
             current_step += 1
+            
+            
+            if current_step == max_iter:
+                model.save(current_step)
+                print(f"Saved final checkpoint at {current_step}")
+
+            if current_step > max_iter:
+                print(f"\nTraining completed at {max_iter} iterations.")
+                return
+                
 
             if dataset_type == 'dnpatch' and current_step % 20000 == 0:  # for 'train400'
                 train_loader.dataset.update_data()

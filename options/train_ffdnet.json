@@ -20,17 +20,17 @@
     "train": {
       "name": "train_dataset"           // just name
       , "dataset_type": "ffdnet"        // "dncnn" | "dnpatch" | "fdncnn" | "ffdnet" | "sr" | "srmd" | "dpsr" | "plain" | "plainpatch"
-      , "dataroot_H": "trainsets/trainH"// path of H training dataset
+      , "dataroot_H": "/content/drive/MyDrive/CVResearch/Datasets/DIV2K_train_HR/DIV2K_train_HR" // path of H training dataset
       , "dataroot_L": null              // path of L training dataset
       , "H_size": 64                    // patch size 40 | 64 | 96 | 128 | 192
       , "dataloader_shuffle": true
-      , "dataloader_num_workers": 8
+      , "dataloader_num_workers": 2
       , "dataloader_batch_size": 64     // batch size 1 | 16 | 32 | 48 | 64 | 128
     }
     , "test": {
       "name": "test_dataset"            // just name
       , "dataset_type": "ffdnet"        // "dncnn" | "dnpatch" | "fdncnn" | "ffdnet" | "sr" | "srmd" | "dpsr" | "plain" | "plainpatch"
-      , "dataroot_H": "testsets/bsd68"  // path of H testing dataset
+      , "dataroot_H": "/content/drive/MyDrive/CVResearch/Datasets/DIV2K_valid_HR/DIV2K_valid_HR"  // path of H testing dataset
       , "dataroot_L": null              // path of L testing dataset
     }
   }
