@@ -70,8 +70,8 @@
     , "G_regularizer_clipstep": null    // unused
 
     , "max_iter": 35000,
-      "checkpoint_test": 5000,
-      "checkpoint_save": 5000,
+      "checkpoint_test": 2000,
+      "checkpoint_save": 500,
       "checkpoint_print": 200
 
   }
